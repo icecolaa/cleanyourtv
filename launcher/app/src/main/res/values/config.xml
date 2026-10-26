@@ -15,12 +15,19 @@
         <item>com.amazon.tv.launcher/com.amazon.tv.launcher.ui.MainSettingsActivity</item>
     </string-array>
 
-    <!-- Apps pinned to the dock row at the bottom, in this order. Missing apps are skipped. -->
+    <!-- Open the main Settings entry with the first installed vendor settings app above, even though
+         the AOSP settings answers the standard intent (Xiaomi China: the vendor app has 账号与安全 and
+         the ADB switch, the AOSP one does not). Sub-pages (display, Wi-Fi, apps) keep the standard route. -->
+    <bool name="prefer_vendor_settings">true</bool>
+
+    <!-- Apps pinned to the dock row at the bottom, in this order. Missing apps are skipped.
+         TVBox is repackaged as com.huawei.himovceie and 芒果TV as com.hunantv.license on this TV
+         (query-activities shows their real launcher classes). -->
     <string-array name="dock_apps">
-        <item>com.netflix.ninja</item>
-        <item>com.amazon.amazonvideo.livingroom</item>
-        <item>com.google.android.youtube.tv</item>
-        <item>in.startv.hotstar</item>
+        <item>com.huawei.himovceie</item>
+        <item>com.xiaodianshi.tv.yst</item>
+        <item>com.netease.cloudmusic.tv</item>
+        <item>com.hunantv.license</item>
     </string-array>
     <!-- With fewer dock_apps than columns (or a dock app that is not installed), the free dock slots take
          the first grid apps, so the dock never shows a gap. false leaves them empty (#162); a theme can
@@ -29,12 +36,13 @@
 
     <!-- Apps never shown as tiles (e.g. the Live TV app, which the Inputs menu already covers). -->
     <string-array name="hidden_apps">
-        <item>com.mediatek.wwtv.tvcenter</item>
         <item>com.mitv.gallery</item>
     </string-array>
 
-    <!-- The TV's Live TV / tuner app, offered at the end of the Inputs menu. Leave empty to omit. -->
-    <string name="live_tv_package" translatable="false">com.mediatek.wwtv.tvcenter</string>
+    <!-- The TV's Live TV / tuner app, offered at the end of the Inputs menu. Leave empty to omit.
+         This Xiaomi CN firmware has no Live TV app that answers ACTION_VIEW; the tuner inputs are
+         reached through input_action + input_sources below instead. -->
+    <string name="live_tv_package" translatable="false"></string>
 
     <!-- Open the Live TV app above the first time Home comes up after the TV is switched on, for sets that are
          mostly used for broadcast TV. Once per boot: Home after that stays Home. Can also be set with
@@ -90,6 +98,10 @@
     <!-- A tile's artwork instead of the app's banner: "package=drawable", a banner_* drawable bundled with the
          launcher (res/drawable). banner_tv is a magenta field with the Live TV glyph. -->
     <string-array name="app_banners">
+        <item>com.netease.cloudmusic.tv=banner_netease_music</item>
+        <item>com.tencent.qqmusictv=banner_qqmusic</item>
+        <item>com.changba.sd=banner_changba</item>
+        <item>com.quark.yun.tv=banner_quark</item>
     </string-array>
 
     <!-- TVs with no TvInputManager have no HDMI list to read, but their own source-selection panel
@@ -115,8 +127,10 @@
          (XGIMI projectors: com.xgimi.action.hdmiPlayer). Written as "package/.Activity" it names the vendor's
          own source picker instead, started by itself for every row, ahead of the standard way: for firmware that
          answers the channel URI with "unsupported" (Redmi X65, MiTV-NSOP0:
-         com.xiaomi.mitv.tvplayer/.ExternalSourceActivity opens its HDMI 1 / HDMI 2 / AV overlay). Leave empty to omit. -->
-    <string name="input_action" translatable="false"></string>
+         com.xiaomi.mitv.tvplayer/.ExternalSourceActivity opens its HDMI 1 / HDMI 2 / AV overlay). Leave empty to omit.
+         Xiaomi CN firmware (MiTV-MFFU0, finch): com.xiaomi.mitv.tvplayer.EXTSRC_PLAY with the int
+         extra "input" from input_sources below, per docs/devices/xiaomi-mitv-mftr0-freeguy.txt. -->
+    <string name="input_action" translatable="false">com.xiaomi.mitv.tvplayer.EXTSRC_PLAY</string>
     <!-- Inputs menu: a scheme to send the input's passthrough URI with instead of content:// (and no channel MIME
          type). YaOS: live-tv. Its source player answers live-tv://android.media.tv/passthrough/<input>, while the
          content:// URI goes to its channel player, which resumes the last film it played. Leave empty to omit. -->
@@ -148,6 +162,11 @@
          com.xiaomi.mitv.tvplayer.EXTSRC_PLAY and MStar numbers: HW5=23, HW6=24, HW7=25, HW8=-, HW2=2,
          HW3=-, HW4=- (see examples/redmi-mitv-mftp0). Leave empty to omit. -->
     <string-array name="input_sources" translatable="false">
+        <item>HW5=23</item>
+        <item>HW6=24</item>
+        <item>HW7=25</item>
+        <item>HW8=-</item>
+        <item>HW2=2</item>
     </string-array>
 
     <!-- Remote buttons that open Settings, by Linux scancode (HOME_KEY_SERVICE=1 build-and-install.sh). Remotes

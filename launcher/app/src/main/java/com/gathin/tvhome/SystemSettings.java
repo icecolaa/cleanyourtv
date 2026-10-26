@@ -16,6 +16,14 @@ final class SystemSettings {
 
     static Intent intent(Context context, String action) {
         PackageManager pm = context.getPackageManager();
+        // Firmware that ships its own settings app next to the AOSP one, and the AOSP one answers the
+        // standard actions first (Xiaomi China). prefer_vendor_settings routes the main settings entry
+        // to the vendor app, which holds the pages the AOSP one has no row for.
+        if (context.getResources().getBoolean(R.bool.prefer_vendor_settings)
+                && Settings.ACTION_SETTINGS.equals(action)) {
+            Intent vendor = vendorIntent(context);
+            if (vendor != null) return vendor;
+        }
         Intent standard = new Intent(action);
         ResolveInfo resolved = pm.resolveActivity(standard, PackageManager.MATCH_DEFAULT_ONLY);
         // Fire OS resolves the standard actions to a CTS compliance stub that opens nothing;
