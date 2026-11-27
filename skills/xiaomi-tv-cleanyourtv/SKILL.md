@@ -2,9 +2,9 @@
 slug: xiaomi-tv-cleanyourtv
 name: xiaomi-tv-cleanyourtv
 displayName: 小米电视 CleanYourTV 净化部署
-version: 1.2.0
-summary: 小米电视可逆精简、Apple TV 风格桌面安装与升级后主页黑屏诊断。
-description: 在小米 Android 电视上安装或复用 CleanYourTV，按固件检查可停用包，并在主页黑屏或升级后检查实际桌面、验证遥控器和开机行为。
+version: 1.2.1
+summary: 让 AI 带你给小米电视装上 Apple TV 风格桌面，按需精简预装应用，也能排查按主页键黑屏。
+description: 适用于小米 Android 电视和兼容盒子。把型号、系统版本和局域网 IP 告诉电脑上的 AI，它会指导你开启 ADB、备份现状、安装或复用 CleanYourTV，并验证遥控器主页键和开机桌面。可按需停用广告和预装应用，保留还原记录。
 license: MIT
 tags: [android-tv, xiaomi, hyperos, debloat, launcher, adb, cleanyourtv]
 homepage: https://github.com/Gathin23/cleanyourtv
@@ -12,9 +12,11 @@ homepage: https://github.com/Gathin23/cleanyourtv
 
 # 小米电视 CleanYourTV 净化部署
 
-把小米电视（HyperOS / MIUI TV / Android TV）的广告桌面换成 [Gathin23/cleanyourtv](https://github.com/Gathin23/cleanyourtv) 的 Apple TV 风格干净桌面，并去除系统广告。**只停用（pm disable-user）、不卸载、不 root、全程可逆。**
+想给小米电视换一个 Apple TV 风格的桌面，或排查按主页键后黑屏？这个 skill 让电脑上的 AI 带你完成操作。电视和电脑连到同一局域网，准备好目标电视或盒子的型号、系统版本和局域网 IP。找不到这些信息时，可以先让 AI 指导你用遥控器查看。
 
-适用：编码代理在**与电视同一局域网的电脑**上执行。已在小米电视 S Pro Mini LED 65（MiTV-MFFU0，HyperOS 3，Android 14）完整实测，通用 Android TV 机型同样适用（按实机能力验证）。
+你可以只安装桌面，也可以尝试将它设为默认桌面，或按需精简广告和预装应用。AI 会先检查兼容性、备份当前设置，再安装或复用已有桌面。能否接管主页键和开机画面取决于固件，两项分别实机验证。精简通过停用应用完成，可按变更记录还原。
+
+[项目仓库与部署指南](https://gitee.com/ice-colaa/cleanyourtv)
 
 ## 红线（先读）
 
